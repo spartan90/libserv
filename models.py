@@ -1,5 +1,6 @@
-#have all models based on part A pdf details
+#DataObjects
 
+'''Book DAO :- id,title,author,genere,availability'''
 class Book:
     def __init__(self,bookId,title,author,genre):
         self.bookId = str(bookId)
@@ -12,6 +13,7 @@ class Book:
         status = "Available" if self.isAvailable else "Borrowed"
         return f"[{self.bookId}] '{self.title}' written by {self.author} ({self.genre}) - {status}"
 
+'''Member DAO :- id,name,age,contact,borrowedBooks'''
 class Member:
     def __init__(self,memberID,name,age,contact):
         self.memberId = str(memberID)
@@ -23,7 +25,7 @@ class Member:
     def __str__(self):
         return f"Member [{self.memberId}]: {self.name} | Contact: {self.contact}"
 
-### Audit trail for reporting purpse
+'''AuditTrail Object which can be used for reporting purpse'''
 class BookAudit:
     def __init__(self,id,bookId,memberId,action):
         self.id = id

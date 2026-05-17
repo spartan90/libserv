@@ -1,6 +1,9 @@
 from collections import Counter
 
 from models import Book, Member, BookAudit
+
+'''This is a servie layer'''
+'''This will have functions like add,return, reporting and supporting utility functions like validation,mock data adding'''
 class LibManagementService:
     def __init__(self):
         self.books = {}
@@ -62,6 +65,7 @@ class LibManagementService:
     ##show active members who has borrowd books
     def show_member_borrowed_books(self):
         return [member for member in self.members.values() if len(member.booksBorrowed) > 0]
+
 
     ##search by title or author
     def search_by_author_or_title(self,searchTxt):

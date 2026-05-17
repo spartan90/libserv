@@ -15,10 +15,12 @@ class LibServApp:
         self.max_invalidCount = 3
         self.failed_login = 0
 
+    ##load the initial setup
     def load(self):
         print("------  * WELCOME TO THE LibSerV * ------- ")
         print("*********************************************\n")
 
+        ##authenticate user
         while self.failed_login < self.max_invalidCount:
             user_id = input(f"\nEnter user id: ")
             user_password = input("Enter password: ")
@@ -37,6 +39,7 @@ class LibServApp:
         print("Too many failed attempts. Access Locked. Exiting application...")
         sys.exit()
 
+    ##main libserv applciation
     def libservOptions(self):
         '''Show all the available menus to user'''
         while True:
@@ -77,6 +80,10 @@ class LibServApp:
                 ## borrowed members
                 borrowers = self.libManagSrvc.show_member_borrowed_books()
                 print(f"\nActive Borrowers ({len(borrowers)}):")
+                if borrowers:
+                    for m in borrowers:
+                        booksList = ", ".join([f"'{b.title}'" for b in m.booksBorrowed])
+                        print(f"- {m.name} (ID: {m.memberId}) borrowed books: {booksList}")
 
             elif selectedOption == "5":
                 ## search by author or tile
