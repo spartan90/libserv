@@ -8,6 +8,10 @@ class Book:
         self.genre = genre
         self.isAvailable = True
 
+    def __str__(self):
+        status = "Available" if self.isAvailable else "Borrowed"
+        return f"[{self.bookId}] '{self.title}' written by {self.author} ({self.genre}) - {status}"
+
 class Member:
     def __init__(self,memberID,name,age,contact):
         self.memberId = str(memberID)
@@ -16,8 +20,11 @@ class Member:
         self.contact = contact
         self.booksBorrowed = []
 
+    def __str__(self):
+        return f"Member [{self.memberId}]: {self.name} | Contact: {self.contact}"
+
 ### Audit trail for reporting purpse
-class BookAuditTrail:
+class BookAudit:
     def __init__(self,id,bookId,memberId,action):
         self.id = id
         self.bookId = bookId

@@ -2,6 +2,7 @@
 #Main file, which would be front face to the user
 import sys
 from AuthenticationService import AuthenticationService
+from LibManagementService import LibManagementService
 
 
 #Keep on continous loop and show multiple options with keys, ask user to type Exit to close this app
@@ -10,6 +11,7 @@ class LibServApp:
 
     def __init__(self):
         self.authService = AuthenticationService()
+        self.libManagSrvc = LibManagementService()
         self.max_invalidCount = 3
         self.failed_login = 0
 
@@ -48,10 +50,26 @@ class LibServApp:
 
             if selectedOption == "1":
                 ## borrow book function call
+                memberId = input("Enter Member ID: ")
+                bookId = input("Enter Book ID: ")
+                result = self.libManagSrvc.borrow_book(memberId, bookId)
+                print(f"\n{result}")
+
             elif selectedOption == "2":
                 ## Return book function call
+                memberId = input("Enter Member ID: ")
+                bookId = input("Enter Book ID: ")
+                result = self.libManagSrvc.return_book(memberId, bookId)
+                print(f"\n{result}")
+
             elif selectedOption == "3":
                 ## show all available books to user
+                results = self.libManagSrvc.show_available_books()
+                if results:
+                    for book in results: print(book)
+                else:
+                    print("Sorry No available books currently!")
+                
             elif selectedOption == "4":
                 ##Exit
                 print("Thank you for using the LibSerV!")
