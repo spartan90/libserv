@@ -44,7 +44,10 @@ class LibServApp:
             print("1. Borrow a Book")
             print("2. Return a Book")
             print("3. Show Available Books")
-            print("4. Exit Application")
+            print("4. Borrowed Members")
+            print("5. Search Book By Author/Title")
+            print("6. Know the famous genre")
+            print("7. Exit Application")
 
             selectedOption = input("\nPlease select an option (1-4): ")
 
@@ -69,11 +72,34 @@ class LibServApp:
                     for book in results: print(book)
                 else:
                     print("Sorry No available books currently!")
-                
+
             elif selectedOption == "4":
+                ## borrowed members
+                borrowers = self.libManagSrvc.show_member_borrowed_books()
+                print(f"\nActive Borrowers ({len(borrowers)}):")
+
+            elif selectedOption == "5":
+                ## search by author or tile
+                searchTxt = input("Enter search term (Title/Author): ")
+                results = self.libManagSrvc.search_by_author_or_title(searchTxt)
+                print(f"\nFound ({len(results)}) matches:")
+                for book in results: print(book)
+
+            elif selectedOption == "6":
+                ## most popular genre
+                genre, count = self.libManagSrvc.show_popular_genere()
+                print("\n***** Popularity Book Genre *****")
+                if genre:
+                    print(f"Most Popular Genre: {genre}")
+                    print(f"Total times books from this genre were checked out: {count}")
+                else:
+                    print("No borrowing data available yet to calculate trends.")
+
+            elif selectedOption == "7":
                 ##Exit
                 print("Thank you for using the LibSerV!")
                 break
+
             else:
                 print("Please help to select valid option")
 

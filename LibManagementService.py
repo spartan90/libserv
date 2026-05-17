@@ -1,3 +1,5 @@
+from collections import Counter
+
 from models import Book, Member, BookAudit
 class LibManagementService:
     def __init__(self):
@@ -56,6 +58,34 @@ class LibManagementService:
     ##show all books
     def show_available_books(self):
         return [book for book in self.books.values() if book.isAvailable]
+
+    ##show active members who has borrowd books
+    def show_member_borrowed_books(self):
+        return [member for member in self.members.values() if len(member.booksBorrowed) > 0]
+
+    ##search by title or author
+    def search_by_author_or_title(self,searchTxt):
+        searchTxt = searchTxt.strip().lower()
+        return [
+            book for book in self.books.values()
+            if searchTxt in book.title.lower() or searchTxt in book.author.lower()
+        ]
+
+    ##find the most popular genere
+    def show_popular_genere(self):
+        borrowed_genres = [
+            self.books[trail.bookId].genre
+            for trail in self.auditTrail
+            if trail.action == "Borrow" and trail.bookId in self.books
+        ]
+
+        if not borrowed_genres:
+            return None, 0
+
+        genre_counts = Counter(borrowed_genres)
+        most_common_genre, count = genre_counts.most_common(1)[0]
+        return most_common_genre, count
+
 
     ##Basic Validation
     def valid_request(self, memberId, bookId):
